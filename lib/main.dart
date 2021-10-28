@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'dropdown.dart';
 // import './dropdown.dart';
 
@@ -8,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root of your application.`
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,8 +33,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+    bool isButtonActive = false;
+    late TextEditingController controller = TextEditingController();
+    late TextEditingController controlleremail = TextEditingController();
+    late TextEditingController controllerPassword = TextEditingController();
 
+@override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+    controlleremail = TextEditingController();
 
+    controller.addListener(login);
+    controlleremail.addListener(login);
+    controllerPassword.addListener(login);
+
+    
+  }
+  void login() {
+      setState(() {
+        if (controller.text.isNotEmpty &&
+            controlleremail.text.isNotEmpty &&
+            controllerPassword.text.isNotEmpty) {
+          isButtonActive = true;
+        } else {
+          isButtonActive = false;
+        }
+      });
+    }
+    @override
+    void dispose() {
+      controller.dispose();
+      controlleremail.dispose();
+      super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     
@@ -55,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                decoration: InputDecoration(
                border: OutlineInputBorder(),
                labelText: 'NAME',
-        ),
+        ),controller : controller,
             
       ),
             SizedBox(height :18 ),
@@ -63,19 +94,45 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'EMAIL',
-        ),
+        ), controller: controlleremail,
       ),
             SizedBox(height :18 ),
             TextField(
             decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: 'PASSWORD',
-        ),
+        ), controller: controllerPassword,
       ),
       Container(
         child: DropDownDemo(),
       ),
-            
+      ElevatedButton(
+                    child: Text('LOGIN',),
+                    style: ElevatedButton.styleFrom(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 92, vertical: 10),
+                        primary: Colors.green,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        textStyle: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                    onPressed: !isButtonActive
+                        ? null:() {
+                          
+                         
+                            controller.clear();
+                            controlleremail.clear();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("SUCCESFULLY SIGN IN",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 20)),
+                              // duration: const Duration(seconds: 2),
+                            ));
+                            // validation purpose
+                          }
+                       
+                  )
             
           ],
         ),
