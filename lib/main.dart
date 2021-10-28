@@ -34,27 +34,27 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
     bool isButtonActive = false;
-    late TextEditingController controller = TextEditingController();
-    late TextEditingController controlleremail = TextEditingController();
-    late TextEditingController controllerPassword = TextEditingController();
+    late TextEditingController nameController = TextEditingController();
+    late TextEditingController emailController = TextEditingController();
+    late TextEditingController passwordController = TextEditingController();
 
 @override
   void initState() {
     super.initState();
-    controller = TextEditingController();
-    controlleremail = TextEditingController();
+    nameController = TextEditingController();
+    emailController = TextEditingController();
 
-    controller.addListener(login);
-    controlleremail.addListener(login);
-    controllerPassword.addListener(login);
+    nameController.addListener(login);
+    emailController.addListener(login);
+    passwordController.addListener(login);
 
     
   }
   void login() {
       setState(() {
-        if (controller.text.isNotEmpty &&
-            controlleremail.text.isNotEmpty &&
-            controllerPassword.text.isNotEmpty) {
+        if (nameController.text.isNotEmpty &&
+            emailController.text.isNotEmpty &&
+            passwordController.text.isNotEmpty) {
           isButtonActive = true;
         } else {
           isButtonActive = false;
@@ -63,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     @override
     void dispose() {
-      controller.dispose();
-      controlleremail.dispose();
+      nameController.dispose();
+      emailController.dispose();
       super.dispose();
   }
   @override
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                decoration: InputDecoration(
                border: OutlineInputBorder(),
                labelText: 'NAME',
-        ),controller : controller,
+        ),controller : nameController,
             
       ),
             SizedBox(height :18 ),
@@ -94,14 +94,14 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'EMAIL',
-        ), controller: controlleremail,
+        ), controller: emailController,
       ),
             SizedBox(height :18 ),
             TextField(
             decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: 'PASSWORD',
-        ), controller: controllerPassword,
+        ), controller: passwordController,
       ),
       Container(
         child: DropDownDemo(),
@@ -121,8 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ? null:() {
                           
                          
-                            controller.clear();
-                            controlleremail.clear();
+
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("SUCCESFULLY SIGN IN",
                                   textAlign: TextAlign.center,
